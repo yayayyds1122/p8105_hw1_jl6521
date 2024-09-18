@@ -1,0 +1,39 @@
+---
+title: "p8105_hw1_jl6521"
+author: "Jiayi"
+date: "2024-09-18"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages("palmerpenguins")
+#install.packages("ggplot2")
+#install.packages("tidyverse")
+library(ggplot2)
+library(tidyverse)
+```
+
+## Problem 1: dataset description
+The penguins dataset contains the 3 species of penguins("species"), name of island ("island") such as Biscoe, Dream, and Torgersen, and their various features, such as their length and depth of bill ("bill_length_mm")("bill_depth_mm"), their flipper length ("flipper_length_mm"), their body mass ("body_mass_g"), their sex ("sex"), and their age ("year"). All the detailed information are listed below in the summary table. The dataset has 344 rows and 8 columns, and the mean flipper length is 200.9152.  
+```{r description}
+data("penguins", package = "palmerpenguins")
+summary(penguins)
+nrows = nrow(penguins)
+ncols = ncol(penguins)
+flipper_length = pull(penguins,flipper_length_mm)
+mean_flipper = mean(flipper_length,na.rm = TRUE)
+print(paste("The mean flipper length is", mean_flipper))
+```
+
+```{r scatterplot}
+ggplot(penguins,aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() + 
+  xlab("bill length") + 
+  ylab("flipper length") + 
+  ggtitle("Scatterplot of flipper length vs bill length") + 
+  theme_classic()
+ggsave("Scatterplot_flipper_bill_length.jpg", height = 4, width = 6)
+```
+
+
