@@ -36,4 +36,38 @@ ggplot(penguins,aes(x = bill_length_mm, y = flipper_length_mm, color = species))
 ggsave("Scatterplot_flipper_bill_length.jpg", height = 4, width = 6)
 ```
 
+## Problem 2
+
+The data frame is created: 
+```{r problem2}
+problem2_df = tibble(
+  x = rnorm(10),
+  log_vec = c(x>0),
+  char_vec = c("Who","is","the","smartest","person","in","the","world","Ya","Ya"),
+  fac_vec = factor(c("good","very good","super good","good","very good","super good","good","very good","super good","super good"))
+)
+problem2_df
+```
+Next, we found that the numeric random sample and logical vector can take a mean; character vector and factor vector can't take a mean.
+```{r}
+x = pull(problem2_df, var = x)
+mean(x)
+log_vec = pull(problem2_df, var = log_vec)
+mean(log_vec)
+char_vec = pull(problem2_df, var = char_vec)
+mean(char_vec)
+fac_vec = pull(problem2_df, var = fac_vec)
+mean(fac_vec)
+```
+
+When we explicitly convert variables from one type to numeric vectors, logical and factor variables are converted successfully to numeric vectors while character variables can't. Logical vectors can be converted to either 0 or 1 since it's only TRUE and FALSE. Factor vectors can be converted to numerical but they are only at their levels. Character variables can't be converted at all.
+
+I think this helps explain the result since the function mean is converting variables to numeric, and logical vectors can be converted. Factor vector can't be converted because the numeric values are only their levels, so calculating the mean is meaningless. Character variables can't be taken mean.  
+```{r problem2-2}
+new_log = as.numeric(log_vec)
+print(new_log)
+new_char = as.numeric(char_vec)
+new_fac = as.numeric(fac_vec)
+print(new_fac)
+```
 
